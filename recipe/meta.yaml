@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/megawidget-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/megawidget-{{ version }}.tar.gz
   sha256: 70a384b3ea932fb2c70ff285c9099e21ae463d709bff0436825a9ff5f13e1afe
 
 build:
@@ -14,14 +14,15 @@ build:
     - megawidget = megawidget.__main__:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
     - pip
-    - python >=3.5
+    - python {{ python_min }}
+    - setuptools
   run:
-    - python >=3.5
+    - python >={{ python_min }}
     - tkutil
     - viewable
 
@@ -33,6 +34,7 @@ test:
     - megawidget --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/pyrustic/megawidget
